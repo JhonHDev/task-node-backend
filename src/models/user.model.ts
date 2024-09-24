@@ -13,7 +13,7 @@ const userSchema = new Schema({
 
 userSchema.methods.toJSON = function () {
 	const userObj = this.toObject();
-	const { userId, _id, email, ...rest } = userObj;
+	const { userId, email, ...rest } = userObj;
 
 	return {
 		userId,

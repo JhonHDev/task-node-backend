@@ -4,6 +4,7 @@ import http from 'http';
 
 import connectToDB from '../db';
 import userRoutes from '../routes/user.routes';
+import taskRoutes from '../routes/task.routes';
 
 class Server {
 	private app: Application;
@@ -31,6 +32,7 @@ class Server {
 
 	private setRoutes(): void {
 		this.app.use(`${this.apiBase}/users`, userRoutes);
+		this.app.use(`${this.apiBase}/tasks`, taskRoutes);
 	}
 
 	public run(): void {
