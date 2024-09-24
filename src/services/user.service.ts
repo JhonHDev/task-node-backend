@@ -1,11 +1,14 @@
+import generateToken from '../helpers/generateSessionToken';
 import { User } from '../models';
 
 class UserService {
-	async createNewUser(userId: string) {
-		const user = await new User({ userId });
+	public async createNewUser(userId: string, email: string) {
+		const user = await new User({ userId, email });
 		await user.save();
 
-		return user;
+		const token = await generateToken(userId);
+
+		return { user, token };
 	}
 }
 
