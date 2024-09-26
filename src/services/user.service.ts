@@ -10,6 +10,18 @@ class UserService {
 
 		return { user, token };
 	}
+
+	public async getUserById(userId: string, email: string) {
+		const user = await User.findOne({ userId, email });
+
+		if (!user) {
+			throw new Error('Credenciales de acceso no válidas');
+		}
+
+		const token = await generateToken(user.userId);
+
+		return { user, token };
+	}
 }
 
 export default UserService;

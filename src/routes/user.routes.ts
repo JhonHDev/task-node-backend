@@ -1,10 +1,22 @@
 import { Router } from 'express';
-import { check } from 'express-validator';
+import { check, query } from 'express-validator';
 
-import { validateFields } from '../middlewares';
-import { createNewUser } from '../controllers/user.controller';
+import { validateFields, validateUserExists } from '../middlewares';
+import { createNewUser, getUserSessionByUserId } from '../controllers/user.controller';
 
 const router = Router();
+
+router.get(
+	'/:userId',
+	[
+		validateUserExists,
+		check('userId', 'El userId es requerido').not().isEmpty(),
+		query('email', 'El correo electrónico es requerido').not().isEmpty(),
+		query('email', 'El correo electrónico no es válido').isEmail(),
+		validateFields,
+	],
+	getUserSessionByUserId
+);
 
 router.post(
 	'/',
